@@ -1,0 +1,60 @@
+name = input("Enter student's name: ")
+budget = float(input("Enter weekly budget: "))
+
+
+categories = ["Food and drinks", "Transportation", "Mobile/Internet", "School supplies", "Entertainment"]
+
+print("\nExpense Categories:")
+for i in range(len(categories)):
+    print(f"{i+1}. {categories[i]}")
+
+expenses = []
+
+
+for i in range(4):
+    print(f"\nExpense Entry {i+1}")
+    category_num = int(input("Enter category number (1-5) or 0 to skip: "))
+
+    if category_num == 0:
+        continue
+
+    
+    if 1 <= category_num <= 5:
+        description = input("Enter item description: ")
+        amount = float(input("Enter amount spent: "))
+
+    
+        high_expense = ""
+        if amount > 0.25 * budget:
+            high_expense = "! High Expense Alert!"
+
+        expenses.append({
+            "category": categories[category_num - 1],
+            "description": description,
+            "amount": amount,
+            "alert": high_expense
+        })
+    else:
+        print("Invalid category. Skipping this entry.")
+
+
+total_spent = sum(exp["amount"] for exp in expenses)
+remaining = budget - total_spent
+
+if remaining >= 0:
+    status = "Budget OK! Keep it up."
+else:
+    status = "Overspent! Reduce spending."
+
+
+print("\n===== EXPENSE REPORT =====")
+print(f"Student Name: {name}")
+print(f"Weekly Budget: {budget:.2f}\n")
+
+print("Logged Expenses:")
+for i, exp in enumerate(expenses, 1):
+    print(f"{i}. {exp['category']} - {exp['description']} - {exp['amount']:.2f} {exp['alert']}")
+
+print("\nTotal Spent:", f"{total_spent:.2f}")
+print("Remaining Balance:", f"{remaining:.2f}")
+print("Status:", status)
